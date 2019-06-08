@@ -12,7 +12,7 @@ export default class PortfolioForm extends Component {
         this.state = {
             name: "",
             description: "",
-            category: "Animals",
+            category: "Python",
             position: "",
             url: "",
             thumb_image: "",
@@ -70,7 +70,7 @@ export default class PortfolioForm extends Component {
             id: id,
             name: name || "",
             description: description || "",
-            category: category || "Animals",
+            category: category || "Python",
             position: position || "",
             url: url || "",
             editMode: true,
@@ -164,7 +164,7 @@ export default class PortfolioForm extends Component {
             this.setState({
                 name: "",
                 description: "",
-                category: "Animals",
+                category: "Python",
                 position: "",
                 url: "",
                 thumb_image: "",
@@ -220,9 +220,9 @@ export default class PortfolioForm extends Component {
                             onChange={this.handleChange}
                             className="select-element"
                         >
-                         <option value="Animals">Animals</option>
-                         <option value="Flights">Flights</option>
-                         <option value="Jewelry">Jewelry</option>
+                         <option value="JavaScript">JavaScript</option>
+                         <option value="Python">Python</option>
+                         <option value="PHP">PHP</option>
                         </select>
                     </div>
 
