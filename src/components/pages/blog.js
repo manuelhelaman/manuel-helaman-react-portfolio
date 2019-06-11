@@ -23,6 +23,23 @@ export default class Blog extends Component {
         this.handleNewBlogClick = this.handleNewBlogClick.bind(this);
         this.handleModalClose = this.handleModalClose.bind(this);
         this.handleSuccesfulNewBlogSubmission = this.handleSuccesfulNewBlogSubmission.bind(this)
+        this.handleDeleteClick = this.handleDeleteClick.bind(this);
+    }
+
+    handleDeleteClick(blog){
+        axios.delete(`https://api.devcamp.space/portfolio/portfolio_blogs/${blog.id}`, 
+        {withCredentials: true}
+        ).then(response => {
+            this.setState({
+                blogItems: this.state.blogItems.filter(blogItem => {
+                    return blog.id !== blogItem.id
+                })
+            })
+            return response.data
+        }).catch(error => {
+            console.log('Handel delete blog click error ', error);
+            
+        })
     }
 
     handleSuccesfulNewBlogSubmission(blog) {
@@ -59,7 +76,6 @@ export default class Blog extends Component {
         })
         axios.get(`http://manuelhelaman.devcamp.space/portfolio/portfolio_blogs?page=${this.state.currentPage}`, {withCredentials: true
         }).then(response =>{
-            console.log('getting', response.data);
             
             this.setState({
                 blogItems: this.state.blogItems.concat(response.data.portfolio_blogs),
@@ -82,7 +98,18 @@ export default class Blog extends Component {
 
     render() {
         const blogRecords = this.state.blogItems.map(blogItem => {
-            return <BlogItem key={blogItem.id} blogItem={blogItem} />
+            if(this.props.loggedInstatus === "LOGGED_IN") {
+                return (
+                    <div key={blogItem.id} className="admin-blog-wrapper">
+                        <BlogItem blogItem={blogItem} />
+                        <a onClick={() => this.handleDeleteClick(blogItem)}>
+                            <FontAwesomeIcon icon="trash" />
+                        </a>
+                    </div>
+                )
+            } else {
+                return <BlogItem key={blogItem.id} blogItem={blogItem} />
+            }
         })
         return (
             <div className="blog-container">
